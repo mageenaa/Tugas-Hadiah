@@ -91,14 +91,14 @@ def title():
     root.title(tanggal + " | " + waktu + " | ")
     root.after(1000, title)
 root = tk.Tk()
-cal = Calendar(root, font = "Times", weight = "Bold", selectmode = 'day', locale = 'id_ID', cursor = 'hand1')
-cal.grid(row = 1, column = 0, sticky = 'N', rowspan = 7)
-cal.bind("<<CalendarSelected>>", ListTodo)
-tanggal = str(cal.selection_get())
-treev = ttk.Treeview(root)
-treev.grid(row = 0, column = 1, sticky = 'WNE', rowspan = 4, columnspan = 2)
-scrollBar = tk.Scrollbar(root, orient = "vertical", command = treev.yview)
-scrollBar.grid(row = 0, column = 3, sticky = 'ENS', rowspan = 4)
+cal = Calendar(root, font = "Verdana 20 italic", selectmode = 'day', locale = 'id_ID', cursor = 'hand2') #pada line ini kita bisa mengubah kalender mulai dari font, ukuran font, dan kursor sesuai keinginan)
+cal.grid(row = 0, column = 0, sticky = 'W', rowspan = 100) #rowspan diubah agar tombolnya jaraknya berdekatan
+cal.bind("<<CalendarSelected>>", ListTodo) #untuk mengikat antara calendar select dan fungsi listtodo
+tanggal = str(cal.selection_get()) #mendeklarasi tanggal menjadi tipe data string
+treev = ttk.Treeview(root) #memanggil treeview ke dalam variabel treev
+treev.grid(row = 0, column = 1, sticky = 'WNE', rowspan = 1, columnspan = 2) #layouting bagan todo listnya, diubah menjadi 1 utk rowspan dan columnspan 2 agar pas
+scrollBar = tk.Scrollbar(root, orient = "vertical", command = treev.yview) #membuat tombol scrollbar
+scrollBar.grid(row = 0, column = 3, sticky = 'ENS') #menghapus rowspan karena tidak diperlukan
 treev.configure(yscrollcommand = scrollBar.set)
 treev.bind("<Double-1>", detailTodo)
 treev["columns"] = ('1', '2')
@@ -106,13 +106,15 @@ treev["show"] = 'headings'
 treev.column("1", width = 100)
 treev.heading("1", text = "JAM")
 treev.heading("2", text = "JUDUL")
-btnAdd = tk.Button (root, text='Tambah', width=20, bg='PeachPuff3', fg='black', command=AddForm)
+#Menambahkan relief untuk mengubah bentuk button dan mengubah warna background dibawah.
+#Mengubah ukuran width dan menambahkan ukuran height tombol
+btnAdd = tk.Button (root, text='Tambah', width=30, height=2, bg='orange', fg='black', relief=GROOVE, command=AddForm)
 btnAdd.grid(row = 4, column = 1, sticky = 'N')
-btnDel = tk.Button (root, text='Hapus', width=20, bg='PeachPuff3', fg='black', command=delTodo)
+btnDel = tk.Button (root, text='Hapus', width=30, height=2,bg='orange', fg='black', relief=GROOVE, command=delTodo)
 btnDel.grid(row = 4, column = 2, sticky = 'N')
-btnLoad = tk.Button (root, text='Load', width=20, bg='PeachPuff3', fg='black', command=LoadTodos)
+btnLoad = tk.Button (root, text='Load', width=30, height=2,bg='yellow', fg='black', relief=GROOVE, command=LoadTodos)
 btnLoad.grid(row = 5, column = 1, sticky = 'S')
-btnSave = tk.Button (root, text='Save', width=20, bg='PeachPuff3', fg='black', command=SaveTodos)
+btnSave = tk.Button (root, text='Save', width=30, height=2,bg='yellow', fg='black', relief=GROOVE, command=SaveTodos)
 btnSave.grid(row = 5, column = 2, sticky = 'S')
 title()
 root.mainloop()
