@@ -10,11 +10,7 @@ todos = {}      # Deklarasi todos sebagai dictionary
 def detailTodo(cb = None):      # membuat fungsi none untuk pengembalian True apabila tidak ditemukan value apapun
     win = tk.Toplevel()
     win.wm_title("Detail Kegiatan")
-    # lbl = Label(win, image = bg_end)
-    # lbl.place(x=0, y=0)
-    # lbl2 = Label(win)
     win.configure(bg = '#00B09B')
-    # root.configure(bg = '#00B09B')
     selectedItem = treev.focus()
     selectedIndex = treev.item(selectedItem)['text']
     selectedTodo = todos[tanggal][selectedIndex]
@@ -28,7 +24,7 @@ def detailTodo(cb = None):      # membuat fungsi none untuk pengembalian True ap
     keterangan.grid(row = 2, column = 1, sticky = "NE", padx = 10)    # mengubah sticky menjadi NE supaya letaknya di Top Right, padx 10 untuk memperlebar output kolom keterangan, dan pady 3 untuk memberi jarak 3 px dengan baris lain
     keterangan.insert(tk.INSERT, selectedTodo["Keterangan"])
     keterangan.configure(state = "disabled")
-    bg_univ = Image.open('universe.png')
+    bg_univ = Image.open('universe.png')        
     bg_end = ImageTk.PhotoImage(bg_univ)
     win.geometry('1280x720')
     tk.Label(win, image = bg_end).grid(row = 0, column = 2, columnspan = 3, rowspan = 3, padx = 5, pady = 5)
