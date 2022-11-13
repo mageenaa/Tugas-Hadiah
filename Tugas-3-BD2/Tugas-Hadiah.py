@@ -16,18 +16,18 @@ def detailTodo(cb = None):      # membuat fungsi none untuk pengembalian True ap
     selectedTodo = todos[tanggal][selectedIndex]
     judul = tk.StringVar(value = selectedTodo['Judul'])
     tk.Label(win, text = "Tanggal\t\t:").grid(row = 0, column = 0, sticky="NW")        # sticky diubah jadi NW supaya letaknya ada di Top Left
-    tk.Label(win, text = "{} | {}".format(tanggal, selectedTodo["Waktu"])).grid(row = 0, column = 1, sticky = "NE")   # mengubah sticky menjadi NE supaya letaknya di Top Right, dan pady 3 untuk memberi jarak 3 px dengan baris lain
+    tk.Label(win, text = "{} | {}".format(tanggal, selectedTodo["Waktu"])).grid(row = 0, column = 1, sticky = "NE", pady = 0)   # mengubah sticky menjadi NE supaya letaknya di Top Right, dan pady 3 untuk memberi jarak 3 px dengan baris lain
     tk.Label(win, text = "Judul\t\t:").grid(row = 1, column = 0, sticky="NW")          # sticky diubah jadi NW supaya letaknya ada di Top Left
-    tk.Entry(win, state = "disabled", textvariable = judul).grid(row = 1, column = 1, sticky = "NE")  # mengubah sticky menjadi NE supaya letaknya di Top Right, dan pady 3 untuk memberi jarak 3 px dengan baris lain
+    tk.Entry(win, state = "disabled", textvariable = judul).grid(row = 1, column = 1, sticky = "NE", pady = 0)  # mengubah sticky menjadi NE supaya letaknya di Top Right, dan pady 3 untuk memberi jarak 3 px dengan baris lain
     tk.Label(win, text = "Keterangan\t:").grid(row = 2, column = 0, sticky="NW")     # sticky diubah jadi NW supaya letaknya ada di Top Left
     keterangan = ScrolledText(win, width = 30, height = 10)
     keterangan.grid(row = 2, column = 1, sticky = "NE", padx = 10)    # mengubah sticky menjadi NE supaya letaknya di Top Right, padx 10 untuk memperlebar output kolom keterangan, dan pady 3 untuk memberi jarak 3 px dengan baris lain
     keterangan.insert(tk.INSERT, selectedTodo["Keterangan"])
     keterangan.configure(state = "disabled")
-    bg_univ = Image.open('universe.png')        
-    bg_end = ImageTk.PhotoImage(bg_univ)
-    win.geometry('1280x720')
-    tk.Label(win, image = bg_end).grid(row = 0, column = 2, columnspan = 3, rowspan = 3, padx = 5, pady = 5)
+    bg_univ = Image.open('bumi.png')        # membuka image yang sudah ada di github
+    bg_end = ImageTk.PhotoImage(bg_univ)        
+    win.geometry('1280x720')        # mengubah size output detailTodo
+    tk.Label(win, image = bg_end).grid(row = 0, column = 2, columnspan = 3, rowspan = 3, padx = 5, pady = 5)    
     Label.pack()
 def LoadTodos():        # membuat fungsi untuk load data yang sudah dibuat
     global todos 
