@@ -90,6 +90,8 @@ def title():
     tanggal = str(cal.selection_get())
     root.title(tanggal + " | " + waktu + " | ")
     root.after(1000, title)
+
+#BAGIAN DEVAN
 root = tk.Tk()
 cal = Calendar(root, font = "Verdana 20 italic", selectmode = 'day', locale = 'id_ID', cursor = 'hand2') #pada line ini kita bisa mengubah kalender mulai dari font, ukuran font, dan kursor sesuai keinginan)
 cal.grid(row = 0, column = 0, sticky = 'W', rowspan = 100) #rowspan diubah agar tombolnya jaraknya berdekatan
