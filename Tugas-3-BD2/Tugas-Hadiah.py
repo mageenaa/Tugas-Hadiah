@@ -3,29 +3,34 @@ from time import strftime           # Import strftime untuk convert tanggal dan 
 from tkinter import ttk             # Import ttk untuk mengubah desain dari widget yang dihasilkan oleh tkinter
 from tkinter.scrolledtext import ScrolledText       # Import scrolledtext untuk menghubungkan text widget dengan vertical scroll
 from tkcalendar import Calendar         # Import Calendar untuk mendapatkan output kalender
-from tkinter import *
-from PIL import ImageTk, Image
+from tkinter import *       # Import seluruh fungsi dan modul bawaan dalam library tkinter
+from PIL import ImageTk, Image      # Import modul image dari library PIL untuk membuka file image
 todos = {}      # Deklarasi todos sebagai dictionary
 
 def detailTodo(cb = None):      # membuat fungsi none untuk pengembalian True apabila tidak ditemukan value apapun
-    win = tk.Toplevel()
+    win = tk.Toplevel()     # membuat GUI dalam variabel win
     win.wm_title("Detail Kegiatan")
-    win.configure(bg = '#00B09B')
+    win.configure(bg = '#1F7EA1')       # nambahin warna background pada output detailTodo
     selectedItem = treev.focus()
     selectedIndex = treev.item(selectedItem)['text']
     selectedTodo = todos[tanggal][selectedIndex]
     judul = tk.StringVar(value = selectedTodo['Judul'])
-    tk.Label(win, text = "Tanggal\t\t:").grid(row = 0, column = 0, sticky="NW")        # sticky diubah jadi NW supaya letaknya ada di Top Left
-    tk.Label(win, text = "{} | {}".format(tanggal, selectedTodo["Waktu"])).grid(row = 0, column = 1, sticky = "NE", pady = 0)   # mengubah sticky menjadi NE supaya letaknya di Top Right, dan pady 3 untuk memberi jarak 3 px dengan baris lain
-    tk.Label(win, text = "Judul\t\t:").grid(row = 1, column = 0, sticky="NW")          # sticky diubah jadi NW supaya letaknya ada di Top Left
-    tk.Entry(win, state = "disabled", textvariable = judul).grid(row = 1, column = 1, sticky = "NE", pady = 0)  # mengubah sticky menjadi NE supaya letaknya di Top Right, dan pady 3 untuk memberi jarak 3 px dengan baris lain
-    tk.Label(win, text = "Keterangan\t:").grid(row = 2, column = 0, sticky="NW")     # sticky diubah jadi NW supaya letaknya ada di Top Left
-    keterangan = ScrolledText(win, width = 30, height = 10)
+                                                    ###################### 
+                                                    ## Pembuatan widget ##
+                                                    ######################
+# menambah background color pada line 25, 26, 27, 30, dan 31
+    tk.Label(win, text = "Tanggal\t\t:", bg = '#6FF7E8').grid(row = 0, column = 0, sticky="NW")        # sticky diubah jadi NW supaya letaknya ada di Top Left
+    tk.Label(win, text = "{} | {}".format(tanggal, selectedTodo["Waktu"]), width = 38, bg = '#6FF7E8').grid(row = 0, column = 1, sticky = "NE", pady = 0)   # mengubah sticky menjadi NE supaya letaknya di Top Right, dan pady 3 untuk memberi jarak 3 px dengan baris lain
+    tk.Label(win, text = "Judul\t\t:", bg = '#6FF7E8').grid(row = 1, column = 0, sticky="NW")          # sticky diubah jadi NW supaya letaknya ada di Top Left
+# pada line 29 merubah state menjadi normal agar text terlihat jelas, menambahkan width dan bg
+    tk.Entry(win, state = "normal", textvariable = judul, width = 45, bg = '#6FF7E8').grid(row = 1, column = 1, sticky = "NE", pady = 0)  # mengubah sticky menjadi NE supaya letaknya di Top Right, dan pady 3 untuk memberi jarak 3 px dengan baris lain
+    tk.Label(win, text = "Keterangan\t:", bg = '#6FF7E8').grid(row = 2, column = 0, sticky="NW")     # sticky diubah jadi NW supaya letaknya ada di Top Left
+    keterangan = ScrolledText(win, width = 30, height = 10, bg = '#6FF7E8')
     keterangan.grid(row = 2, column = 1, sticky = "NE", padx = 10)    # mengubah sticky menjadi NE supaya letaknya di Top Right, padx 10 untuk memperlebar output kolom keterangan, dan pady 3 untuk memberi jarak 3 px dengan baris lain
     keterangan.insert(tk.INSERT, selectedTodo["Keterangan"])
     keterangan.configure(state = "disabled")
     bg_univ = Image.open('bumi.png')        # membuka image yang sudah ada di github
-    bg_end = ImageTk.PhotoImage(bg_univ)        
+    bg_end = ImageTk.PhotoImage(bg_univ)    # memberikan command ImageTk agar image dapat di proses oleh tkinter 
     win.geometry('1280x720')        # mengubah size output detailTodo
     tk.Label(win, image = bg_end).grid(row = 0, column = 2, columnspan = 3, rowspan = 3, padx = 5, pady = 5)    
     Label.pack()
@@ -36,11 +41,11 @@ def LoadTodos():        # membuat fungsi untuk load data yang sudah dibuat
     f.close()
     todos = eval(data)
     ListTodo()      # kembali ke fungsi ListTodo
-def SaveTodos(): 
+def SaveTodos():    # membuat fungsi untuk menyimpan data yang dibuat
     f = open('mytodo.dat','w')      # membaca file mode write only untuk menyimpan data baru
     f.write(str(todos))
     f.close()
-def delTodo(): 
+def delTodo():      # membuat fungsi untuk menghapus data yang sudah dibuat
     tanggal = str(cal.selection_get())
     selectedItem = treev.focus()
     todos[tanggal].pop(treev.item(selectedItem)['text'])        
@@ -90,12 +95,18 @@ def title():
     tanggal = str(cal.selection_get())
     root.title(tanggal + " | " + waktu + " | ")
     root.after(1000, title)
+
+    #######################################################################################################################################
+    #######################################################################################################################################
+    #######################################################################################################################################
+
 root = tk.Tk()
+root.configure(bg = '#D8DED6')  # nambahin warna background pada output title
 cal = Calendar(root, font = "Times", weight = "Bold", selectmode = 'day', locale = 'id_ID', cursor = 'hand1')
 cal.grid(row = 1, column = 0, sticky = 'N', rowspan = 7)
 cal.bind("<<CalendarSelected>>", ListTodo)
 tanggal = str(cal.selection_get())
-treev = ttk.Treeview(root)
+treev = ttk.Treeview(root)      # pembuatan tkinter treeview dalam variabel treev untuk mengubah desain UI dari GUI yang dibuat
 treev.grid(row = 0, column = 1, sticky = 'WNE', rowspan = 4, columnspan = 2)
 scrollBar = tk.Scrollbar(root, orient = "vertical", command = treev.yview)
 scrollBar.grid(row = 0, column = 3, sticky = 'ENS', rowspan = 4)
